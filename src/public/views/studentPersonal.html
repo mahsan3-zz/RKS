@@ -1,0 +1,258 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+      <ol class="breadcrumb">
+        <li><a href="/studentMain">Home</a></li>
+        <li class="active">Personal Information</li>
+
+      </ol>
+    </div>
+</div>
+<!-- THIS SECTION IS FOR VIEW -->
+<div ng-hide="editorEnabled" class="form-horizontal">
+  <div class="panel">
+    <div id="student_content" >
+      <div id="personal-information" class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <span class="panel-title">Personal Information</span>
+          <button class="btn btn-primary pull-right" ng-click="enableEditor()">Edit</button>
+        </div>
+        <div class="panel-body">
+          <div class="row text-left">
+            <div class="col-xs-6 col-md-3">
+              <div id="class-count" class="well">
+                <img src="/img/{{studentObj.photo}}" width="190" height="300">
+                <p>  </p>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-6"  style="background-color:lavenderrose;">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="firstName" ng-model="studentObj.firstName" value="{{studentObj.firstName}}" placeholder="{{studentObj.firstName}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="lastName" ng-model="studentObj.lastName" value="{{studentObj.lastName}}" placeholder="{{studentObj.lastName}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Address</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.address.street" value="{{studentObj.personalInfo.address.street}}" placeholder="{{studentObj.personalInfo.address.street}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">City</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.address.city" value="{{studentObj.personalInfo.address.city}}" placeholder="{{studentObj.personalInfo.address.city}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Province</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.address.province" value="{{studentObj.personalInfo.address.province}}" placeholder="{{studentObj.personalInfo.address.province}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Postal Code</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.address.postalCode" value="{{studentObj.personalInfo.address.postalCode}}" placeholder="{{studentObj.personalInfo.address.postalCode}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.email" value="{{studentObj.personalInfo.email}}" placeholder="{{studentObj.personalInfo.email}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Home Phone</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.phoneNumbers.homePhone" value="{{studentObj.personalInfo.phoneNumbers.homePhone}}" placeholder="{{studentObj.personalInfo.phoneNumbers.homePhone}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Cell Phone</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control input-small" name="address" ng-model="studentObj.personalInfo.phoneNumbers.cellPhone" value="{{studentObj.personalInfo.phoneNumbers.cellPhone}}" placeholder="{{studentObj.personalInfo.phoneNumbers.cellPhone}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <div class="well">
+                <label>Student Number </label><br>{{studentObj.userID}}<br>
+
+                <p><strong>Member Since</strong></p>
+                <h4><span class="label label-primary">{{studentObj.membershipDate | date:'yyyy-MM-dd'}}</span></h4>
+
+
+              </div>
+            </div>
+          </div>
+          <!-- end class row text-center -->
+        </div>
+        <!-- end panel body -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END SECTION FOR VIEW -->
+
+
+<!-- THIS SECTION IS FOR EDIT MODE -->
+<div ng-show="editorEnabled" class="form-horizontal">
+  <form name="editPersonalInfoForm">
+    <div class="form-group">
+      <div class="">    <!-- not sure if needed -->
+        <div id="student_content" >   <!-- not sure if needed -->
+          <div id="personal-information" class="panel panel-default">
+            <div class="panel-heading clearfix">
+              <span class="panel-title">Edit Personal Information</span>
+              <button class="btn btn-primary pull-right" ng-disabled="editPersonalInfoForm.$invalid" type="submit" ng-click="save(isValid)">Save</button>
+              <button class="btn btn-primary pull-right" ng-click="cancel()">Cancel</button>
+            </div>
+            <div class="panel-body">
+              <div class="row text-left">
+                <div class="col-xs-6 col-md-3">
+                  <div id="class-count" class="well">
+                    <img src="/img/{{studentObj.photo}}" width="190" height="300">
+                    <p>  </p>
+
+                    <div class="col-md=1" style="background-color:#FEFF83; text-align:center;"
+                         ng-file-drop ng-file-select ng-model="files" class="drop-box"
+                         drag-over-class="dragover" ng-multiple="true" allow-dir="true"
+                         accept="image/*" ng-file-change="upload($files)">Drag Image HERE or CLICK to ADD</div>
+                    <div ng-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-6"  style="background-color:lavenderrose;">
+                  <!-- First Name -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.firstName.$invalid && !editPersonalInfoForm.firstName.$pristine || (editPersonalInfoForm.firstName.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">First Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="firstName" ng-model="tempStudentObj.firstName" ng-minlength="2" required ng-show="editorEnabled">
+                      <div ng-show="editPersonalInfoForm.firstName.$invalid && editPersonalInfoForm.firstName.$error.required">
+                        <p ng-show="(editPersonalInfoForm.firstName.$invalid && editPersonalInfoForm.firstName.$error.required) && (editPersonalInfoForm.firstName.$dirty || editPersonalInfoForm.$submitted)" class="help-block">First name is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.firstName.$error.minlength" class="help-block">First name must be at least 2 characters.</p>
+                    </div>
+                  </div>
+                  <!-- Last Name -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.lastName.$invalid && !editPersonalInfoForm.lastName.$pristine || (editPersonalInfoForm.lastName.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Last Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="lastName" ng-model="tempStudentObj.lastName" minlength="2" required>
+                      <div ng-show="editPersonalInfoForm.lastName.$invalid && editPersonalInfoForm.lastName.$error.required">
+                        <p ng-show="(editPersonalInfoForm.lastName.$invalid && editPersonalInfoForm.lastName.$error.required) && (editPersonalInfoForm.lastName.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Last name is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.lastName.$error.minlength" class="help-block">Last name must be at least 2 characters.</p>
+                    </div>
+                  </div>
+                  <!-- ADDRESS -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.address.$invalid && !editPersonalInfoForm.address.$pristine || (editPersonalInfoForm.address.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-small" name="address" ng-model="tempStudentObj.personalInfo.address.street" ng-minlength="3" required>
+                      <div ng-show="editPersonalInfoForm.address.$invalid && editPersonalInfoForm.address.$error.required">
+                        <p ng-show="(editPersonalInfoForm.address.$invalid && editPersonalInfoForm.address.$error.required) && (editPersonalInfoForm.address.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Street name is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.address.$error.minlength" class="help-block">Street name must  be at least 3 characters.</p>
+                    </div>
+                  </div>
+                  <!-- CITY -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.city.$invalid && !editPersonalInfoForm.city.$pristine || (editPersonalInfoForm.city.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">City</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-small" name="city" ng-model="tempStudentObj.personalInfo.address.city" ng-minlength="3" required>
+                      <div ng-show="editPersonalInfoForm.city.$invalid && editPersonalInfoForm.city.$error.required">
+                        <p ng-show="(editPersonalInfoForm.city.$invalid && editPersonalInfoForm.city.$error.required) && (editPersonalInfoForm.city.$dirty || editPersonalInfoForm.$submitted)" class="help-block">City is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.city.$error.minlength" class="help-block">City must be at least 3 characters.</p>
+                    </div>
+                  </div>
+                  <!-- PROVINCE -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.province.$invalid && !editPersonalInfoForm.province.$pristine || (editPersonalInfoForm.province.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Province</label>
+                    <div class="col-sm-9">
+                      <select class="form-control input-sm" name="province" id="province" ng-model="tempStudentObj.personalInfo.address.province" required>
+                        <option value="ON">Ontario</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="QC">Quebec</option>
+                      </select>
+
+                      <div ng-show="editPersonalInfoForm.province.$invalid && editPersonalInfoForm.province.$error.required">
+                        <p ng-show="(editPersonalInfoForm.province.$invalid && editPersonalInfoForm.province.$error.required) && (editPersonalInfoForm.province.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Province is required.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- POSTAL CODE -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.postalCode.$invalid && !editPersonalInfoForm.postalCode.$pristine || (editPersonalInfoForm.postalCode.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Postal Code</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-small" name="postalCode" ng-model="tempStudentObj.personalInfo.address.postalCode" ng-pattern="/^[A-Za-z][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/" required>
+                      <div ng-show="editPersonalInfoForm.postalCode.$invalid && editPersonalInfoForm.postalCode.$error.required">
+                        <p ng-show="(editPersonalInfoForm.postalCode.$invalid && editPersonalInfoForm.postalCode.$error.required) && (editPersonalInfoForm.postalCode.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Postal code is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.postalCode.$error.pattern" class="help-block">Postal code invalid. Please use proper format X1X 1X1.</p>
+                    </div>
+                  </div>
+                  <!-- EMAIL ADDRESS-->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.email.$invalid && !editPersonalInfoForm.email.$pristine || (editPersonalInfoForm.email.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control input-small" name="email" ng-model="tempStudentObj.personalInfo.email" required>
+
+                      <div ng-show="editPersonalInfoForm.email.$invalid && editPersonalInfoForm.email.$error.required">
+                        <p ng-show="(editPersonalInfoForm.email.$invalid && editPersonalInfoForm.email.$error.required) && (editPersonalInfoForm.email.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Email address is required.</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.email.$error.email" class="help-block">Email address invalid.</p>
+                    </div>
+                  </div>
+                  <!-- HOME PHONE -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.homePhone.$invalid && !editPersonalInfoForm.homePhone.$pristine || (editPersonalInfoForm.homePhone.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Home Phone</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-small" name="homePhone" ng-model="tempStudentObj.personalInfo.phoneNumbers.homePhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" required >
+                      <div ng-show="editPersonalInfoForm.homePhone.$invalid && editPersonalInfoForm.homePhone.$error.required">
+                        <p ng-show="(editPersonalInfoForm.homePhone.$invalid && editPersonalInfoForm.homePhone.$error.required) && (editPersonalInfoForm.homePhone.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Phone number is required.</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.homePhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                  </div>
+                  <!-- CELL PHONE -->
+                  <div class="form-group" ng-class="{ 'has-error' : editPersonalInfoForm.cellPhone.$invalid && !editPersonalInfoForm.cellPhone.$pristine || (editPersonalInfoForm.cellPhone.$invalid && editPersonalInfoForm.$submitted) }">
+                    <label class="col-sm-3 control-label">Cell Phone</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control input-small" name="cellPhone" ng-model="tempStudentObj.personalInfo.phoneNumbers.cellPhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999">
+                      <div ng-show="editPersonalInfoForm.cellPhone.$invalid && editPersonalInfoForm.cellPhone.$error.required">
+                        <p ng-show="(editPersonalInfoForm.cellPhone.$invalid && editPersonalInfoForm.cellPhone.$error.required) && (editPersonalInfoForm.cellPhone.$dirty || editPersonalInfoForm.$submitted)" class="help-block">Phone number is required</p>
+                      </div>
+                      <p ng-show="editPersonalInfoForm.cellPhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                  <div class="well">
+                    <label>Student Number </label><br>{{studentObj.userID}}<br>
+
+                    <p><strong>Member Since</strong></p>
+                    <h4><span class="label label-primary">{{studentObj.membershipDate | date:'yyyy-MM-dd'}}</span></h4>
+
+
+                  </div>
+                </div>
+              </div>
+              <!-- end class row text-center -->
+            </div>
+            <!-- end panel body -->
+          </div>
+        </div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- end form group -->
+  </form>
+</div>
+<!-- END SECTION IS FOR EDIT MODE -->

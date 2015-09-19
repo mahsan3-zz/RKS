@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li><a href="/{{homePage}}">Home</a></li>
+        <li class="active">Shift Reports</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Shift Reports</span>
+        <span class="pull-right">
+            <a href="" data-toggle="modal" data-target="#reportModal"><button class="btn btn-sm btn-primary" ng-click="addReport()">Add</button></a>
+            <a href=""><button class="btn btn-sm btn-danger" ng-click="deleteReport()">Delete</button></a>
+        </span>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th></th>
+                <th>Class Date</th>
+                <th>Author</th>
+            </tr>
+            <tr ng-repeat="report in reportList | filter:searchText | orderBy: '-reportDate' ">
+                <td><input ng-model="report.checked" type="checkbox" ng-change="addSelectedReport()"></td>
+                <td><a data-toggle="modal" data-target="#reportModalView" ng-click="viewReportDetail(report)">{{report.reportDate | date: 'MMMM d, yyyy'}}</a></td>
+                <td>{{report.reportAuthor}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- CREATE MODAL  -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+            <form name="editAddForm" novalidate>
+                <label for="editSubject">Title</label>
+                <input name="title" id="editSubject" type="text" class="form-control" placeholder="" ng-model="newReport.reportTitle" required>
+                <label>Description</label>
+                <textarea  name="description"class="form-control" rows="3" placeholder="" ng-model="newReport.reportDescription" required></textarea>
+                <div ng-show="errorMessage" class="text-danger">{{errorMessage}}</div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" ng-click="validate()" data-dismiss="modal">{{modalButton}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW MODAL  -->
+<div class="modal fade" id="reportModalView" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">{{viewReport.reportTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <label>Description</label>
+        <p>{{viewReport.reportDescription}}</p>
+        <label>Date Created</label>
+        <p>{{viewReport.reportDate | date: "MMMM d, yyyy 'at' h:mma"}}</p>
+        <label>Author</label>
+        <p>{{viewReport.reportAuthor}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="editReport(viewReport)" data-toggle="modal" data-target="#reportModal" data-dismiss="modal">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>

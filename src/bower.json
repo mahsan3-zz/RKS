@@ -1,0 +1,21 @@
+{
+  "name": "CapstoneProject-Angular",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-resource": "latest",
+    "bootbox": "latest",
+    "jQuery": "latest",
+    "ng-file-upload": "3.0.2",
+    "bootstrap-calendar": "latest",
+    "angular-bootstrap-calendar": "latest",
+    "moment": "2.9.0",
+    "angular-ui": "latest",
+    "angular-bootstrap": "latest",
+    "angular-easyfb": "1.2.1"
+  }
+}

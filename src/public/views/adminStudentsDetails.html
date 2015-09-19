@@ -1,0 +1,938 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+      <ol class="breadcrumb">
+        <li><a href="/adminMain">Home</a></li>
+        <li><a href="/adminStudentsList">Members</a></li>
+        <li class="active">{{studentObj.firstName + ' ' + studentObj.lastName}}</li>
+      </ol>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <span class="panel-title">Member Details</span>
+      <span class="pull-right">
+        <button class="btn btn-sm btn-primary" ng-hide="editorEnabled" href="#" ng-click="enableEditor()">Edit</button>
+        <button class="btn btn-sm btn-primary" ng-show="editorEnabled" ng-disabled="editStudentForm.$invalid" type="submit" ng-click="save(isValid)">Save</button>
+        <button class="btn btn-sm btn-default" ng-show="editorEnabled" ng-click="cancel()">Cancel</button>
+      </span>
+    </div>
+    <div class="panel-body">
+      <!-- THIS SECTION IS FOR VIEW -->
+      <div ng-hide="editorEnabled">
+          <div class="media">
+
+            <div class="media-body">
+
+              <div class="well well-sm" style="background-color:white;">
+                <h3 class="media-heading">{{studentObj.firstName}} {{studentObj.lastName}}</h3>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <label>First Name</label>
+                    <p>{{studentObj.firstName}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <label>Last Name</label>
+                    <p>{{studentObj.lastName}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <label>Account Type</label>
+                    <p>{{studentObj.permission}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <label>Expiry Date</label>
+                    <p>{{studentObj.expiryDate | date:'yyyy-MM-dd'}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Date of Birth</label>
+                      <p>{{studentObj.dateOfBirth | date:'yyyy-MM-dd'}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Gender</label>
+                      <p>{{studentObj.gender}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Membership Type</label>
+                      <p>{{studentObj.membershipType}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Inactive Date</label>
+                      <p>{{studentObj.inactiveDate | date:'yyyy-MM-dd'}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Student Number </label>
+                      <p>{{studentObj.userID}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <label>Status</label>
+                    <p>{{studentObj.status}}</p>
+                  </div>
+
+                </div>
+              </div>
+            </div> <!-- media body -->
+              <div class="media-right media-top">
+                <a href="#">
+                <img class="media-object img-rounded" src="/img/{{studentObj.photo}}" width="150" height="216">
+              </a>
+              </div>
+          </div>
+
+        <tabset>    
+          <!-- PANEL TAB 1 -->
+          <tab heading="Personal">
+            <div id="personal_information" class="event-list" >
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" >
+                  <div class=" well" style="background-color:white;">
+                        <label>Address</label><br>
+                        {{studentObj.personalInfo.address.street}}<br>
+                        <label>  City</label><br>
+                        {{studentObj.personalInfo.address.city}}<br>
+                        <label>Province</label><br>
+                        {{studentObj.personalInfo.address.province}}<br>
+                        <label>Postal Code</label><br>{{studentObj.personalInfo.address.postalCode}}<br>
+                        <label>Email</label><br>{{studentObj.personalInfo.email}}<br>
+                        <label>Password</label><br>****<br>
+                        <label>Contact Numbers: </label><br>
+                        <label>Home</label><br>
+                        {{studentObj.personalInfo.phoneNumbers.homePhone}}<br>
+                        <label>Cell</label><br>
+                          {{studentObj.personalInfo.phoneNumbers.cellPhone}}<br>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" >
+                  <div class=" well" style="background-color:white;">
+                      <label>Ont. Health Card</label><br>
+                      {{studentObj.personalInfo.healthCard.cardNumber}}<br>
+                      <label>HC Expiry Date</label><br>
+                      {{studentObj.personalInfo.healthCard.expiryDate | date:'yyyy-MM-dd'}}<br>
+                      <label>Emergency Contact</label><br>{{studentObj.personalInfo.emergencyContact.name}}<br>
+                      <label>Home</label><br>
+                      {{studentObj.personalInfo.emergencyContact.phone}}<br>
+                      <label>Relation to Student</label><br>
+                      {{studentObj.personalInfo.emergencyContact.relation}}<br>
+                      <label>Medical Notes</label> <br>
+                      {{studentObj.personalInfo.medicalNotes}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tab>
+
+          <!-- PANEL TAB 2: PARENT/ GUARDIAN INFORMATION -->
+          <tab heading="Parent / Guardian">
+            <div id="parent_guardian_information" class="event-list">
+              <div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" >
+                    <div class="well well-sm" style="background-color:white;">
+                      <label>1st Contact - Relation to Student</label>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.relation}}<br>
+                      <label>First Name</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.firstName}}<br>
+                      <label>Last Name</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.lastName}}<br>
+                      <label>Address</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.address.street}}<br>
+                      <label>  City</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.address.city}}<br>
+                      <label>Province</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent1.address.province}}<br>
+                      <label>Postal Code</label><br>{{studentObj.personalInfo.parentsGuardians.parent1.address.postalCode}}<br>
+                      <label>Email</label><br>{{studentObj.personalInfo.parentsGuardians.parent1.email}}<br>
+                      <label>Contact Numbers: </label><br>
+                      <label>Home</label>{{studentObj.personalInfo.parentsGuardians.parent1.phoneNumbers.homePhone}}<br>
+                      <label>Cell</label>{{studentObj.personalInfo.parentsGuardians.parent1.phoneNumbers.cellPhone}}<br>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6" >
+                    <div class="well well-sm" style="background-color:white;">
+                      <label>2nd Contact - Relation to Student</label>
+                      {{studentObj.personalInfo.parentsGuardians.parent2.relation}}<br>
+                      <label>First Name</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent2.firstName}}<br>
+                      <label>Last Name</label><br>
+                      {{studentObj.personalInfo.parentsGuardians.parent2.lastName}}<br>
+                      <label>Address</label><br>{{studentObj.personalInfo.parentsGuardians.parent2.address.street}}<br>
+                      <label>City</label><br>{{studentObj.personalInfo.parentsGuardians.parent2.address.city}}<br>
+                      <label>Province</label><br>{{studentObj.personalInfo.parentsGuardians.parent2.address.province}}<br>
+                      <label>Postal Code</label><br>{{studentObj.personalInfo.parentsGuardians.parent2.address.postalCode}} <br>
+                      <label>Email</label><br>{{studentObj.personalInfo.parentsGuardians.parent2.email}}<br>
+                      <label>Contact Numbers:</label><br>
+                      <label>Home</label>{{studentObj.personalInfo.parentsGuardians.parent2.phoneNumbers.homePhone}}<br>
+                      <label>Cell</label>{{studentObj.personalInfo.parentsGuardians.parent2.phoneNumbers.cellPhone}}<br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tab>
+
+          <!-- PANEL TAB 3 -->
+          <tab heading="Membership">
+            <div id="student_content" >
+              <div id="membership-information" class="event-list">
+                <div>
+                  <h4>Membership Information</h4>
+                </div>
+                <div>
+                  <div class="row text-center">
+                    <div class=" col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                      <div id="class-count" class="well">
+                        <h4>Classes</h4>
+                        <h5 id="count">{{totalClasses}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-6 col-md-8 col-lg-8">
+                      <p>{{studentObj.membershipInfo.belt}} Belt</p>
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{progressBar}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressBar}}%;">
+                          {{progressBar}}%
+                        </div>
+                      </div>
+                    </div>
+                    <div class=" col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                      <div class="well">
+                        <p><strong>Next Tip / Exam Date</strong></p>
+                        <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.tipDate | date:'yyyy-MM-dd'}}</span></h4>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end class row text-center -->
+                  <div class="row">
+                    <!-- 1st column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>Belt Date</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.beltDate | date:'yyyy-MM-dd'}}</span></h4>
+                          <br>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 2nd column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>1st Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.firstTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 3rd column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>2nd Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.secondTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 4th column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>3rd Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.thirdTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 5th column -->
+                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                      <div class="well">
+                        <div class="text-center">
+                          <h3><strong>Belt Promotion</strong></h3>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.examDate | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+
+                        <h4 class="text-center"><strong>Next Belt: {{studentObj.membershipInfo.nextBelt}}</strong></h4>
+                        <p> </p>
+                        <p> </p>
+                      </div>
+                      <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Barcode</label><br>
+                      <div barcode-generator="{{studentObj.userID}}" style="height:75px;"></div>
+                    </div>
+                  </div>
+                  <!-- end class row -->
+                </div>
+                <!-- end panel body -->
+              </div>
+            </div>
+          </tab>
+        </tabset>
+
+      </div> <!-- div editorEnabled -->
+      <!-- END SECTION FOR VIEW -->
+
+      <!-- THIS SECTION IS FOR EDIT MODE -->
+      <div ng-show="editorEnabled">
+        <form name="editStudentForm">
+          <div class="media">
+            <div class="media-body">
+              <div class="well well-sm" style="background-color:white;">
+                <h3 class="media-heading">{{studentObj.firstName}} {{studentObj.lastName}}</h3>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.firstName.$invalid && !editStudentForm.firstName.$pristine || (editStudentForm.firstName.$invalid && editStudentForm.$submitted) }">
+                          <label>First Name</label>
+                          <input type="text" class="form-control" name="firstName" ng-model="tempStudentObj.firstName" placeholder="First Name" ng-minlength="2" required ng-show="editorEnabled">
+                          <div ng-show="editStudentForm.firstName.$invalid && editStudentForm.firstName.$error.required">
+                            <p ng-show="(editStudentForm.firstName.$invalid && editStudentForm.firstName.$error.required) && (editStudentForm.firstName.$dirty || editStudentForm.$submitted)" class="help-block">First name is required</p>
+                          </div>
+                          <p ng-show="editStudentForm.firstName.$error.minlength" class="help-block">First name must be at least 2 characters.</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.lastName.$invalid && !editStudentForm.lastName.$pristine || (editStudentForm.lastName.$invalid && editStudentForm.$submitted) }">
+                        <label>Last Name</label><br>
+                        <input type="text" ng-model="tempStudentObj.lastName" name="lastName" class="form-control"  placeholder="Last Name" ng-minlength="2" required>
+                        <div ng-show="editStudentForm.lastName.$invalid && editStudentForm.lastName.$error.required">
+                          <p ng-show="(editStudentForm.lastName.$invalid && editStudentForm.lastName.$error.required) && (editStudentForm.lastName.$dirty || editStudentForm.$submitted)" class="help-block">Last name is required</p>
+                        </div>
+                        <p ng-show="editStudentForm.lastName.$error.minlength" class="help-block">Last name must be at least 2 characters.</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.permission.$invalid && !editStudentForm.permission.$pristine || (editStudentForm.permission.$invalid && editStudentForm.$submitted) }">
+                        <label>Account Type</label> <br>
+                        <select class="form-control input-sm" name="permission" id="permission" ng-model="tempStudentObj.permission" required>
+                          <option value="Student">Student</option>
+                          <option value="Instructor">Instructor</option>
+                        </select>
+                        <div ng-show="editStudentForm.permission.$invalid && editStudentForm.permission.$error.required">
+                          <p ng-show="(editStudentForm.permission.$invalid && editStudentForm.permission.$error.required) && (editStudentForm.permission.$dirty || editStudentForm.$submitted)" class="help-block">Account Type is required.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.expiryDate.$invalid && !editStudentForm.expiryDate.$pristine || (editStudentForm.expiryDate.$invalid && editStudentForm.$submitted) }">
+                        <label>Expiry Date</label><br>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="tempStudentObj.expiryDate" is-open="expiryDateToggle"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" disabled/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'expiryDateToggle')"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div ng-show="editStudentForm.expiryDate.$invalid && editStudentForm.expiryDate.$error.required">
+                          <p ng-show="(editStudentForm.expiryDate.$invalid && editStudentForm.expiryDate.$error.required) && (editStudentForm.expiryDate.$dirty || editStudentForm.$submitted)" class="help-block">Expiry date is required</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.dateOfBirth.$invalid && !editStudentForm.dateOfBirth.$pristine || (editStudentForm.dateOfBirth.$invalid && editStudentForm.$submitted) }">
+                        <label>Date of Birth</label>
+                        <!--<input type="date" name="dateOfBirth" class="form-control input-sm" value="{{tempStudentObj.dateOfBirth | date:'yyyy-MM-dd'}}" ng-bind="tempStudentObj.dateOfBirth | date:'yyyy-MM-dd'"> -->
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="tempStudentObj.dateOfBirth" is-open="dobToggle"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" disabled/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'dobToggle')"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div ng-show="editStudentForm.dateOfBirth.$invalid && editStudentForm.dateOfBirth.$error.required">
+                          <p ng-show="(editStudentForm.dateOfBirth.$invalid && editStudentForm.dateOfBirth.$error.required) && (editStudentForm.dateOfBirth.$dirty || editStudentForm.$submitted)" class="help-block">Date of birth is required</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Gender</label><br>
+                      <input type="radio" ng-model="tempStudentObj.gender" value="Male" /> <span> Male </span>
+                      <input type="radio" ng-model="tempStudentObj.gender" value="Female" /><span> Female </span>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.membershipType.$invalid && !editStudentForm.membershipType.$pristine || (editStudentForm.membershipType.$invalid && editStudentForm.$submitted) }">
+                        <label>Membership Type</label><br>
+                        <select class="form-control input-sm" name="membershipType" id="membershipType" ng-model="tempStudentObj.membershipType" required>
+                          <option value="Karate">Karate</option>
+                          <option value="Jui Jitsu">Jui Jitsu</option>
+                          <option value="MMA">MMA</option>
+                        </select>
+                        <div ng-show="editStudentForm.membershipType.$invalid && editStudentForm.membershipType.$error.required">
+                          <p ng-show="(editStudentForm.membershipType.$invalid && editStudentForm.membershipType.$error.required) && (editStudentForm.membershipType.$dirty || editStudentForm.$submitted)" class="help-block">Membership type is required.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.inactiveDate.$invalid && !editStudentForm.inactiveDate.$pristine || (editStudentForm.inactiveDate.$invalid && editStudentForm.$submitted) }">
+                        <label>Inactive Date</label><br>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="tempStudentObj.inactiveDate" is-open="inactiveDateToggle"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" disabled/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'inactiveDateToggle')"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div ng-show="editStudentForm.inactiveDate.$invalid && editStudentForm.inactiveDate.$error.required">
+                          <p ng-show="(editStudentForm.inactiveDate.$invalid && editStudentForm.inactiveDate.$error.required) && (editStudentForm.inactiveDate.$dirty || editStudentForm.$submitted)" class="help-block">Inactive date is required</p>
+                        </div>
+                        <p></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <label>Student Number</label>
+                      <input class="form-control" type="text" ng-model="userID" placeholder="Student Number" disabled>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.status.$invalid && !editStudentForm.status.$pristine || (editStudentForm.status.$invalid && editStudentForm.$submitted) }">
+                        <label>Status</label><br>
+                        <select class="form-control input-sm" name="status" id="status" ng-model="tempStudentObj.status" required>
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                          <option value="Closed">Closed</option>
+                        </select>
+                        <div ng-show="editStudentForm.status.$invalid && editStudentForm.status.$error.required">
+                          <p ng-show="(editStudentForm.status.$invalid && editStudentForm.status.$error.required) && (editStudentForm.status.$dirty || editStudentForm.$submitted)" class="help-block">Status is required.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+              </div>
+            </div> <!-- media body -->
+            <div class="media-right media-top">
+                  <img class="media-object img-rounded" src="/img/{{studentObj.photo}}" width="150" height="216">
+                  <p>  </p>
+                  <div class="text-muted" style="background-color:#E6E6E6; text-align:center; height: 63px; line-height: 32px; border-radius: 3px; border: 1px dashed black" ng-file-drop ng-file-select ng-model="files" class="drop-box"
+                        drag-over-class="dragover" ng-multiple="true" allow-dir="true"
+                        accept="image/*" ng-file-change="upload($files)">Drag image here or click to add...</div>
+                  <div ng-no-file-drop>File Drag/Drop is not supported for this browser</div>
+            </div>
+          </div>
+
+          <tabset>
+          <!-- PANEL TAB 1 -->
+          <tab heading="Personal">
+            <div id="personal_information" class="event-list">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="well well-sm" style="background-color:white;">
+                    <!-- ADDRESS -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.address.$invalid && !editStudentForm.address.$pristine || (editStudentForm.address.$invalid && editStudentForm.$submitted) }">
+                      <label>Address</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.address.street" name="address" class="form-control"  placeholder="Street Name" ng-minlength="3" required>
+                      <div ng-show="editStudentForm.address.$invalid && editStudentForm.address.$error.required">
+                        <p ng-show="(editStudentForm.address.$invalid && editStudentForm.address.$error.required) && (editStudentForm.address.$dirty || editStudentForm.$submitted)" class="help-block">Street name is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.address.$error.minlength" class="help-block">Street name must  be at least 3 characters.</p>
+                    </div>
+                    <!-- CITY-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.city.$invalid && !editStudentForm.city.$pristine || (editStudentForm.city.$invalid && editStudentForm.$submitted) }">
+                      <label>City</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.address.city" name="city" class="form-control"  placeholder="City" ng-minlength="3" required>
+                      <div ng-show="editStudentForm.city.$invalid && editStudentForm.city.$error.required">
+                        <p ng-show="(editStudentForm.city.$invalid && editStudentForm.city.$error.required) && (editStudentForm.city.$dirty || editStudentForm.$submitted)" class="help-block">City is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.city.$error.minlength" class="help-block">City must be at least 3 characters.</p>
+                    </div>
+                    <!-- PROVINCE -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.province.$invalid && !editStudentForm.province.$pristine || (editStudentForm.province.$invalid && editStudentForm.$submitted) }">
+                      <label>Province</label><br>
+                      <select class="form-control input-sm" name="province" id="province" ng-model="tempStudentObj.personalInfo.address.province" required>
+                        <option value="ON">Ontario</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="QC">Quebec</option>
+                      </select>
+                      <div ng-show="editStudentForm.province.$invalid && editStudentForm.province.$error.required">
+                        <p ng-show="(editStudentForm.province.$invalid && editStudentForm.province.$error.required) && (editStudentForm.province.$dirty || editStudentForm.$submitted)" class="help-block">Province is required.</p>
+                      </div>
+                    </div>
+                    <!-- POSTAL CODE-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.postalCode.$invalid && !editStudentForm.postalCode.$pristine || (editStudentForm.postalCode.$invalid && editStudentForm.$submitted) }">
+                      <label>Postal Code</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.address.postalCode" name="postalCode" class="form-control" ng-pattern="/^[A-Za-z][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/" placeholder="Postal Code ex. X1X 1X1"  required>
+                      <div ng-show="editStudentForm.postalCode.$invalid && editStudentForm.postalCode.$error.required">
+                        <p ng-show="(editStudentForm.postalCode.$invalid && editStudentForm.postalCode.$error.required) && (editStudentForm.postalCode.$dirty || editStudentForm.$submitted)" class="help-block">Postal code is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.postalCode.$error.pattern" class="help-block">Postal code invalid. Please use proper format X1X 1X1.</p>
+                    </div>
+                    <!-- EMAIL ADDRESS-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.email.$invalid && !editStudentForm.email.$pristine || (editStudentForm.email.$invalid && editStudentForm.$submitted) }">
+                      <label>Email</label><br>
+                      <input type="email" ng-model="tempStudentObj.personalInfo.email" name="email" class="form-control"  placeholder="name@email.com" required>
+                      <div ng-show="editStudentForm.email.$invalid && editStudentForm.email.$error.required">
+                        <p ng-show="(editStudentForm.email.$invalid && editStudentForm.email.$error.required) && (editStudentForm.email.$dirty || editStudentForm.$submitted)" class="help-block">Email address is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.email.$error.email" class="help-block">Email address invalid.</p>
+                    </div>
+                    <!-- PASSWORD -->
+                    <label>Password</label><br>
+                    <button class="btn btn-primary" type="submit" ng-click="">Reset Password</button> <br><br>
+<!-- 
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.password.$invalid && !editStudentForm.email.$pristine || (editStudentForm.password.$invalid && editStudentForm.$submitted) }">
+                      <label>Password</label><br>
+                      <input type="password" ng-model="tempStudentObj.personalInfo.password" name="password" class="form-control"  placeholder="Password" required>
+                      <div ng-show="editStudentForm.password.$invalid && editStudentForm.password.$error.required">
+                        <p ng-show="(editStudentForm.password.$invalid && editStudentForm.password.$error.required) && (editStudentForm.password.$dirty || editStudentForm.$submitted)" class="help-block">Password is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.password.$error.password" class="help-block">Password invalid.</p>
+                    </div> 
+-->
+                    <!-- PHONE NUMBERS-->
+                    <label>Contact Numbers:</label><br>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.homePhone.$invalid && !editStudentForm.homePhone.$pristine || (editStudentForm.homePhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Home</label><br>
+                      <input type="text" name="homePhone" class="form-control" ng-model="tempStudentObj.personalInfo.phoneNumbers.homePhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999" required>
+                      <div ng-show="editStudentForm.homePhone.$invalid && editStudentForm.homePhone.$error.required">
+                        <p ng-show="(editStudentForm.homePhone.$invalid && editStudentForm.homePhone.$error.required) && (editStudentForm.homePhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.homePhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.cellPhone.$invalid && !editStudentForm.cellPhone.$pristine || (editStudentForm.cellPhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Cell</label><br>
+                      <input type="text" name="cellPhone" class="form-control" ng-model="tempStudentObj.personalInfo.phoneNumbers.cellPhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999">
+                      <div ng-show="editStudentForm.cellPhone.$invalid && editStudentForm.cellPhone.$error.required">
+                        <p ng-show="(editStudentForm.cellPhone.$invalid && editStudentForm.cellPhone.$error.required) && (editStudentForm.cellPhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.cellPhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="well well-sm" style="background-color:white;">
+                      <!-- HEALTHCARD -->
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.healthCardNumber.$invalid && !editStudentForm.healthCardNumber.$pristine || (editStudentForm.healthCardNumber.$invalid && editStudentForm.$submitted) }">
+                        <label>Health Card Number</label><br>
+                        <input type="text" ng-model="tempStudentObj.personalInfo.healthCard.cardNumber" name="healthCardNumber" class="form-control"  placeholder="### ### ####" ng-minlength="10">
+                        <div ng-show="editStudentForm.healthCardNumber.$invalid && editStudentForm.healthCardNumber.$error.required">
+                          <p ng-show="(editStudentForm.healthCardNumber.$invalid && editStudentForm.healthCardNumber.$error.required) && (editStudentForm.healthCardNumber.$dirty || editStudentForm.$submitted)" class="help-block">Health card number is required.</p>
+                        </div>
+                        <p ng-show="editStudentForm.healthCardNumber.$error.minlength" class="help-block">Health card number invalid. Please enter valid 10 digit number.</p>
+                      </div>
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.healthCardExpiryDate.$invalid && !editStudentForm.healthCardExpiryDate.$pristine || (editStudentForm.healthCardExpiryDate.$invalid && editStudentForm.$submitted) }">
+                        <label>HC Expiry Date</label><br>
+                        <!--<input type="date" name="healthCardExpiryDate" class="form-control input-sm" ng-model="tempStudentObj.personalInfo.healthCard.expiryDate">-->
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p class="input-group">
+                              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="tempStudentObj.personalInfo.healthCard.expiryDate" is-open="hcExpiryDateToggle"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close" disabled/>
+                              <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'hcExpiryDateToggle')"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div ng-show="editStudentForm.healthCardExpiryDate.$invalid && editStudentForm.healthCardExpiryDate.$error.required">
+                          <p ng-show="(editStudentForm.healthCardExpiryDate.$invalid && editStudentForm.healthCardExpiryDate.$error.required) && (editStudentForm.healthCardExpiryDate.$dirty || editStudentForm.$submitted)" class="help-block">Expiry date is required</p>
+                        </div>
+                      </div>
+                      <!-- EMERGENCYCONTACT -->
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.emergencyContact.$invalid && !editStudentForm.emergencyContact.$pristine || (editStudentForm.emergencyContact.$invalid && editStudentForm.$submitted) }">
+                        <label>Emergency Contact</label><br>
+                        <input type="text" ng-model="tempStudentObj.personalInfo.emergencyContact.name" name="emergencyContact" class="form-control"  placeholder="Name" ng-minlength="2" required>
+                        <div ng-show="editStudentForm.emergencyContact.$invalid && editStudentForm.emergencyContact.$error.required">
+                          <p ng-show="(editStudentForm.emergencyContact.$invalid && editStudentForm.emergencyContact.$error.required) && (editStudentForm.emergencyContact.$dirty || editStudentForm.$submitted)" class="help-block">Name is required.</p>
+                        </div>
+                        <p ng-show="editStudentForm.emergencyContact.$error.minlength" class="help-block">Name must be at least 2 characters.</p>
+                      </div>
+                      <!-- PHONENUMBER -->
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.emergencyContactPhone.$invalid && !editStudentForm.emergencyContactPhone.$pristine || (editStudentForm.emergencyContactPhone.$invalid && editStudentForm.$submitted) }">
+                        <label>Phone Number</label><br>
+                        <input type="text" name="emergencyContactPhone" class="form-control" ng-model="tempStudentObj.personalInfo.emergencyContact.phone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999" required>
+                        <div ng-show="editStudentForm.emergencyContactPhone.$invalid && editStudentForm.emergencyContactPhone.$error.required">
+                          <p ng-show="(editStudentForm.emergencyContactPhone.$invalid && editStudentForm.emergencyContactPhone.$error.required) && (editStudentForm.emergencyContactPhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required.</p>
+                        </div>
+                        <p ng-show="editStudentForm.emergencyContactPhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                      </div>
+                      <!-- RELATIONTOSTUDENT -->
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.emergencyContactRelation.$invalid && !editStudentForm.emergencyContactRelation.$pristine || (editStudentForm.emergencyContactRelation.$invalid && editStudentForm.$submitted) }">
+                        <label>Relation to Student</label><br>
+                        <input type="text" ng-model="tempStudentObj.personalInfo.emergencyContact.relation" name="emergencyContactRelation" class="form-control"  placeholder="Relation to student" ng-minlength="3" required>
+                        <div ng-show="editStudentForm.emergencyContactRelation.$invalid && editStudentForm.emergencyContactRelation.$error.required">
+                          <p ng-show="(editStudentForm.emergencyContactRelation.$invalid && editStudentForm.emergencyContactRelation.$error.required) && (editStudentForm.emergencyContactRelation.$dirty || editStudentForm.$submitted)" class="help-block">Relation to student is required.</p>
+                        </div>
+                        <p ng-show="editStudentForm.emergencyContactRelation.$error.minlength" class="help-block">Relation must be at least 3 characters.</p>
+                      </div>
+                      <!-- MEDICALNOTES -->
+                      <div class="form-group">
+                        <label>Medical Notes</label> <br>
+                        <textarea rows="4" cols="50" maxlength="1500" class="form-control" name="medicalNotes" ng-model="tempStudentObj.personalInfo.medicalNotes"> </textarea>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <!-- end panel body -->
+            </div>
+          </tab>
+          <!-- PANEL TAB 2 -->
+          <tab heading="Parent / Guardian">
+            <div id="parent_guardian_information" class="event-list">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="well well-sm" style="background-color:white;" >
+                    <h4>1st Contact</h4>
+                    <!-- 1ST CONTACT RELATION TO STUDENT-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1Relation.$invalid && !editStudentForm.guardian1Relation.$pristine || (editStudentForm.guardian1Relation.$invalid && editStudentForm.$submitted) }">
+                      <label>Relation to Student</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.relation" name="guardian1Relation" class="form-control"  placeholder="Relation to student" ng-minlength="3">
+                      <div ng-show="editStudentForm.guardian1Relation.$invalid && editStudentForm.guardian1Relation.$error.required">
+                        <p ng-show="(editStudentForm.guardian1Relation.$invalid && editStudentForm.guardian1Relation.$error.required) && (editStudentForm.guardian1Relation.$dirty || editStudentForm.$submitted)" class="help-block">Relation to student is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1Relation.$error.minlength" class="help-block">Relation must be at least 3 characters.</p>
+                    </div>
+                    <!-- 1ST CONTACT FIRST NAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1FirstName.$invalid && !editStudentForm.guardian1FirstName.$pristine || (editStudentForm.guardian1FirstName.$invalid && editStudentForm.$submitted) }">
+                      <label>First Name</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.firstName" name="guardian1FirstName" class="form-control"  placeholder="Address" ng-minlength="2" >
+                      <div ng-show="editStudentForm.guardian1FirstName.$invalid && editStudentForm.guardian1FirstName.$error.required">
+                        <p ng-show="(editStudentForm.guardian1FirstName.$invalid && editStudentForm.guardian1FirstName.$error.required) && (editStudentForm.guardian1FirstName.$dirty || editStudentForm.$submitted)" class="help-block">First name is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1FirstName.$error.minlength" class="help-block">Name must be at least 2 characters.</p>
+                    </div>
+                    <!-- 1ST CONTACT LAST NAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1LastName.$invalid && !editStudentForm.guardian1LastName.$pristine || (editStudentForm.guardian1LastName.$invalid && editStudentForm.$submitted) }">
+                      <label>Last Name</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.lastName" name="guardian1LastName" class="form-control"  placeholder="Address" ng-minlength="2" >
+                      <div ng-show="editStudentForm.guardian1LastName.$invalid && editStudentForm.guardian1LastName.$error.required">
+                        <p ng-show="(editStudentForm.guardian1LastName.$invalid && editStudentForm.guardian1LastName.$error.required) && (editStudentForm.guardian1LastName.$dirty || editStudentForm.$submitted)" class="help-block">Last name is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1LastName.$error.minlength" class="help-block">Name must be at least 2 characters.</p>
+                    </div>
+                    <!-- 1ST CONTACT ADDRESS-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1Address.$invalid && !editStudentForm.guardian1Address.$pristine || (editStudentForm.guardian1Address.$invalid && editStudentForm.$submitted) }">
+                      <label>Address</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.address.street" name="guardian1Address" class="form-control"  placeholder="Address" ng-minlength="3">
+                      <div ng-show="editStudentForm.guardian1Address.$invalid && editStudentForm.guardian1Address.$error.required">
+                        <p ng-show="(editStudentForm.guardian1Address.$invalid && editStudentForm.guardian1Address.$error.required) && (editStudentForm.guardian1Address.$dirty || editStudentForm.$submitted)" class="help-block">Street name  is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1Address.$error.minlength" class="help-block">Street name must be at least 3 characters.</p>
+                    </div>
+                    <!-- 1ST CONTACT CITY-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1City.$invalid && !editStudentForm.guardian1City.$pristine || (editStudentForm.guardian1City.$invalid && editStudentForm.$submitted) }">
+                      <label>City</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.address.city" name="guardian1City" class="form-control"  placeholder="City" ng-minlength="3" >
+                      <div ng-show="editStudentForm.guardian1City.$invalid && editStudentForm.guardian1City.$error.required">
+                        <p ng-show="(editStudentForm.guardian1City.$invalid && editStudentForm.guardian1City.$error.required) && (editStudentForm.guardian1City.$dirty || editStudentForm.$submitted)" class="help-block">City is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1City.$error.minlength" class="help-block">City must be at least 3 characters.</p>
+                    </div>
+                    <!-- 1ST CONTACT PROVINCE -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1Province.$invalid && !editStudentForm.guardian1Province.$pristine || (editStudentForm.guardian1Province.$invalid && editStudentForm.$submitted) }">
+                      <label>Province</label><br>
+                      <select class="form-control input-sm" name="guardian1Province" id="guardian1Province" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.address.province">
+                        <option value="ON">Ontario</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="QC">Quebec</option>
+                      </select>
+                      <div ng-show="editStudentForm.guardian1Province.$invalid && editStudentForm.guardian1Province.$error.required">
+                        <p ng-show="(editStudentForm.guardian1Province.$invalid && editStudentForm.guardian1Province.$error.required) && (editStudentForm.guardian1Province.$dirty || editStudentForm.$submitted)" class="help-block">Province is required.</p>
+                      </div>
+                    </div>
+                    <!-- 1ST CONTACT POSTAL CODE-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1PostalCode.$invalid && !editStudentForm.guardian1PostalCode.$pristine || (editStudentForm.guardian1PostalCode.$invalid && editStudentForm.$submitted) }">
+                      <label>Postal Code</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.address.postalCode" name="guardian1PostalCode" class="form-control" ng-pattern="/^[A-Za-z][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/" placeholder="X1X 1X1">
+                      <div ng-show="editStudentForm.guardian1PostalCode.$invalid && editStudentForm.guardian1PostalCode.$error.required">
+                        <p ng-show="(editStudentForm.guardian1PostalCode.$invalid && editStudentForm.guardian1PostalCode.$error.required) && (editStudentForm.guardian1PostalCode.$dirty || editStudentForm.$submitted)" class="help-block">Postal code is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1PostalCode.$error.pattern" class="help-block">Postal Code Invalid. Please use Proper Format X1X 1X1.</p>
+                    </div>
+                    <!-- 1ST CONTACT EMAIL ADDRESS-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1Email.$invalid && !editStudentForm.guardian1Email.$pristine || (editStudentForm.guardian1Email.$invalid && editStudentForm.$submitted) }">
+                      <label>Email</label><br>
+                      <input type="email" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.email" name="guardian1Email" class="form-control" placeholder="name@email.com">
+                      <div ng-show="editStudentForm.guardian1Email.$invalid && editStudentForm.guardian1Email.$error.required">
+                        <p ng-show="(editStudentForm.guardian1Email.$invalid && editStudentForm.guardian1Email.$error.required) && (editStudentForm.guardian1Email.$dirty || editStudentForm.$submitted)" class="help-block">Email address is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1Email.$error.email" class="help-block">Email address invalid.</p>
+                    </div>
+                    <!-- 1ST CONTACT PHONE NUMBERS-->
+                    <label>Contact Numbers</label><br>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1HomePhone.$invalid && !editStudentForm.guardian1HomePhone.$pristine || (editStudentForm.guardian1HomePhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Home</label><br>
+                      <input type="text" name="guardian1HomePhone" class="form-control" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.phoneNumbers.homePhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999">
+                      <div ng-show="editStudentForm.guardian1HomePhone.$invalid && editStudentForm.guardian1HomePhone.$error.required">
+                        <p ng-show="(editStudentForm.guardian1HomePhone.$invalid && editStudentForm.guardian1HomePhone.$error.required) && (editStudentForm.guardian1HomePhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1HomePhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian1CellPhone.$invalid && !editStudentForm.guardian1CellPhone.$pristine || (editStudentForm.guardian1CellPhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Cell</label><br>
+                      <input type="text" name="guardian1CellPhone" class="form-control" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent1.phoneNumbers.cellPhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999" >
+                      <div ng-show="editStudentForm.guardian1CellPhone.$invalid && editStudentForm.guardian1CellPhone.$error.required">
+                        <p ng-show="(editStudentForm.guardian1CellPhone.$invalid && editStudentForm.guardian1CellPhone.$error.required) && (editStudentForm.guardian1CellPhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian1CellPhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                  <div class="well well-sm" style="background-color:white;">
+                    <h4>2nd Contact</h4>
+                    <!-- 2ND CONTACT RELATION TO STUDENT-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2Relation.$invalid && !editStudentForm.guardian2Relation.$pristine || (editStudentForm.guardian2Relation.$invalid && editStudentForm.$submitted) }">
+                      <label>Relation to Student</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.relation" name="guardian2Relation" class="form-control"  placeholder="Relation to student" ng-minlength="3" >
+                      <div ng-show="editStudentForm.guardian2Relation.$invalid && editStudentForm.guardian2Relation.$error.required">
+                        <p ng-show="(editStudentForm.guardian2Relation.$invalid && editStudentForm.guardian2Relation.$error.required) && (editStudentForm.guardian2Relation.$dirty || editStudentForm.$submitted)" class="help-block">Relation to student is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2Relation.$error.minlength" class="help-block">Relation must be at least 3 characters.</p>
+                    </div>
+                    <!-- 2ND CONTACT FIRST NAME-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2FirstName.$invalid && !editStudentForm.guardian2FirstName.$pristine || (editStudentForm.guardian2FirstName.$invalid && editStudentForm.$submitted) }">
+                      <label>First Name</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.firstName" name="guardian2FirstName" class="form-control"  placeholder="Address" ng-minlength="2" >
+                      <div ng-show="editStudentForm.guardian2FirstName.$invalid && editStudentForm.guardian2FirstName.$error.required">
+                        <p ng-show="(editStudentForm.guardian2FirstName.$invalid && editStudentForm.guardian2FirstName.$error.required) && (editStudentForm.guardian2FirstName.$dirty || editStudentForm.$submitted)" class="help-block">First name is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2FirstName.$error.minlength" class="help-block">Name must be at least 2 characters.</p>
+                    </div>
+                    <!-- 2ND CONTACT LAST NAME -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2LastName.$invalid && !editStudentForm.guardian2LastName.$pristine || (editStudentForm.guardian2LastName.$invalid && editStudentForm.$submitted) }">
+                      <label>Last Name</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.lastName" name="guardian2LastName" class="form-control"  placeholder="Address" ng-minlength="2" >
+                      <div ng-show="editStudentForm.guardian2LastName.$invalid && editStudentForm.guardian2LastName.$error.required">
+                        <p ng-show="(editStudentForm.guardian2LastName.$invalid && editStudentForm.guardian2LastName.$error.required) && (editStudentForm.guardian2LastName.$dirty || editStudentForm.$submitted)" class="help-block">Last name is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2LastName.$error.minlength" class="help-block">Name must be at least 2 characters.</p>
+                    </div>
+                    <!-- 2ND CONTACT ADDRESS-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2Address.$invalid && !editStudentForm.guardian2Address.$pristine || (editStudentForm.guardian2Address.$invalid && editStudentForm.$submitted) }">
+                      <label>Address</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.address.street" name="guardian2Address" class="form-control"  placeholder="Address" ng-minlength="3" >
+                      <div ng-show="editStudentForm.guardian2Address.$invalid && editStudentForm.guardian2Address.$error.required">
+                        <p ng-show="(editStudentForm.guardian2Address.$invalid && editStudentForm.guardian2Address.$error.required) && (editStudentForm.guardian2Address.$dirty || editStudentForm.$submitted)" class="help-block">Street name  is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2Address.$error.minlength" class="help-block">Street name must be at least 3 characters.</p>
+                    </div>
+                    <!-- 2ND CONTACT CITY-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2City.$invalid && !editStudentForm.guardian2City.$pristine || (editStudentForm.guardian2City.$invalid && editStudentForm.$submitted) }">
+                      <label>City</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.address.city" name="guardian2City" class="form-control"  placeholder="City" ng-minlength="3" >
+                      <div ng-show="editStudentForm.guardian2City.$invalid && editStudentForm.guardian2City.$error.required">
+                        <p ng-show="(editStudentForm.guardian2City.$invalid && editStudentForm.guardian2City.$error.required) && (editStudentForm.guardian2City.$dirty || editStudentForm.$submitted)" class="help-block">City is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2City.$error.minlength" class="help-block">City must be at least 3 characters.</p>
+                    </div>
+                    <!-- 2ND CONTACT PROVINCE -->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2Province.$invalid && !editStudentForm.guardian2Province.$pristine || (editStudentForm.guardian2Province.$invalid && editStudentForm.$submitted) }">
+                      <label>Province</label><br>
+                      <select class="form-control input-sm" name="guardian2Province" id="guardian2Province" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.address.province" >
+                        <option value="ON">Ontario</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="QC">Quebec</option>
+                      </select>
+                      <div ng-show="editStudentForm.guardian2Province.$invalid && editStudentForm.guardian2Province.$error.required">
+                        <p ng-show="(editStudentForm.guardian2Province.$invalid && editStudentForm.guardian2Province.$error.required) && (editStudentForm.guardian2Province.$dirty || editStudentForm.$submitted)" class="help-block">Province is required.</p>
+                      </div>
+                    </div>
+                    <!-- 2ST CONTACT POSTAL CODE-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2PostalCode.$invalid && !editStudentForm.guardian2PostalCode.$pristine || (editStudentForm.guardian2PostalCode.$invalid && editStudentForm.$submitted) }">
+                      <label>Postal Code</label><br>
+                      <input type="text" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.address.postalCode" name="guardian2PostalCode" class="form-control" ng-pattern="/^[A-Za-z][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]$/" placeholder="X1X 1X1" >
+                      <div ng-show="editStudentForm.guardian2PostalCode.$invalid && editStudentForm.guardian2PostalCode.$error.required">
+                        <p ng-show="(editStudentForm.guardian2PostalCode.$invalid && editStudentForm.guardian2PostalCode.$error.required) && (editStudentForm.guardian2PostalCode.$dirty || editStudentForm.$submitted)" class="help-block">Postal code is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2PostalCode.$error.pattern" class="help-block">Postal Code Invalid. Please use Proper Format X1X 1X1.</p>
+                    </div>
+                    <!-- 2ST CONTACT EMAIL ADDRESS-->
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2Email.$invalid && !editStudentForm.guardian2Email.$pristine || (editStudentForm.guardian2Email.$invalid && editStudentForm.$submitted) }">
+                      <label>Email</label><br>
+                      <input type="email" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.email" name="guardian2Email" class="form-control" placeholder="name@email.com" >
+                      <div ng-show="editStudentForm.guardian2Email.$invalid && editStudentForm.guardian2Email.$error.required">
+                        <p ng-show="(editStudentForm.guardian2Email.$invalid && editStudentForm.guardian2Email.$error.required) && (editStudentForm.guardian2Email.$dirty || editStudentForm.$submitted)" class="help-block">Email address is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2Email.$error.email" class="help-block">Email address invalid.</p>
+                    </div>
+                    <!-- 2ST CONTACT PHONE NUMBERS-->
+                    <label>Contact Numbers</label><br>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2HomePhone.$invalid && !editStudentForm.guardian2HomePhone.$pristine || (editStudentForm.guardian2HomePhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Home</label><br>
+                      <input type="text" name="guardian2HomePhone" class="form-control" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.phoneNumbers.homePhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999" >
+                      <div ng-show="editStudentForm.guardian2HomePhone.$invalid && editStudentForm.guardian2HomePhone.$error.required">
+                        <p ng-show="(editStudentForm.guardian2HomePhone.$invalid && editStudentForm.guardian2HomePhone.$error.required) && (editStudentForm.guardian2HomePhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required.</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2HomePhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : editStudentForm.guardian2CellPhone.$invalid && !editStudentForm.guardian2CellPhone.$pristine || (editStudentForm.guardian2CellPhone.$invalid && editStudentForm.$submitted) }">
+                      <label>Cell</label><br>
+                      <input type="text" name="guardian2CellPhone" class="form-control" ng-model="tempStudentObj.personalInfo.parentsGuardians.parent2.phoneNumbers.cellPhone" ng-pattern="/^[\d]{3}-?[\d]{3}-?[\d]{4}$/" placeholder="999-999-9999" >
+                      <div ng-show="editStudentForm.guardian2CellPhone.$invalid && editStudentForm.guardian2CellPhone.$error.required">
+                        <p ng-show="(editStudentForm.guardian2CellPhone.$invalid && editStudentForm.guardian2CellPhone.$error.required) && (editStudentForm.guardian2CellPhone.$dirty || editStudentForm.$submitted)" class="help-block">Phone number is required</p>
+                      </div>
+                      <p ng-show="editStudentForm.guardian2CellPhone.$error.pattern" class="help-block">Phone Number Invalid Please use 999-999-9999.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end panel body -->
+            </div>
+          </tab>
+          <!-- PANEL TAB 3 -->
+          <tab heading="Membership">
+            <div id="student_content" >
+              <div id="membership-information" class="event-list">
+                <div class="panel-body">
+                  <div class="row text-center">
+                    <div class=" col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                      <div id="class-count" class="well">
+                        <h4>Classes</h4>
+                        <h5 id="count">{{totalClasses}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-6 col-md-8 col-lg-8">
+                      <!-- BELT TYPE -->
+                      <div class="form-group" ng-class="{ 'has-error' : editStudentForm.belt.$invalid && !editStudentForm.belt.$pristine || (editStudentForm.belt.$invalid && editStudentForm.$submitted) }">
+
+                        <!-- Should not be able to change belt...
+                        <select ng-init="tempStudentObj.membershipInfo.belt" class="form-control input-sm" name="belt" id="belt" ng-model="tempStudentObj.membershipInfo.belt" required>
+                          <option ng-repeat="item in listOfBelts" value="{{item}}">{{item}} Belt</option>
+                        </select>
+                        -->
+                        {{tempStudentObj.membershipInfo.belt}} Belt
+                        <div ng-show="editStudentForm.belt.$invalid && editStudentForm.belt.$error.required">
+                          <p ng-show="(editStudentForm.belt.$invalid && editStudentForm.belt.$error.required) && (editStudentForm.belt.$dirty || editStudentForm.$submitted)" class="help-block">Belt is required.</p>
+                        </div>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{progressBar}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressBar}}%;">
+                          {{progressBar}}%
+                        </div>
+                      </div>
+                    </div>
+                    <div class=" col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                      <div class="well">
+                        <p><strong>Next Tip / Exam Date</strong></p>
+                        <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.tipDate | date:'yyyy-MM-dd'}}</span></h4>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end class row text-center -->
+                  <div class="row">
+                    <!-- 1st column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>Belt Date</strong></p>
+                          <!-- BELT DATE -->
+                          <h4><span class="label label-primary">{{tempStudentObj.membershipInfo.beltDate | date:'yyyy-MM-dd'}}</span></h4>
+<!-- Should not be able to change date...
+                          <div class="form-group" ng-class="{ 'has-error' : editStudentForm.membershipDate.$invalid && !editStudentForm.membershipDate.$pristine || (editStudentForm.membershipDate.$invalid && editStudentForm.$submitted) }">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <p class="input-group">
+                                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="tempStudentObj.membershipDate" is-open="membershipDateToggle"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" disabled/>
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event, 'membershipDateToggle')"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                </p>
+                              </div>
+                            </div>
+                            <div ng-show="editStudentForm.membershipDate.$invalid && editStudentForm.membershipDate.$error.required">
+                              <p ng-show="(editStudentForm.membershipDate.$invalid && editStudentForm.membershipDate.$error.required) && (editStudentForm.membershipDate.$dirty || editStudentForm.$submitted)" class="help-block">Membership date required</p>
+                            </div>
+                          </div>
+                          -->
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 2nd column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>1st Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.firstTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 3rd column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>2nd Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.secondTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 4th column -->
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+                      <div class="well">
+                        <div class="text-center">
+                          <p><strong>3rd Tip</strong></p>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.thirdTip | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+<!--
+                        <p>A Days <span class="badge pull-right">14</span></p>
+                        <p>B Days <span class="badge pull-right">15</span></p>
+                        <p>Boot Camp <span class="badge pull-right">0</span></p>
+-->
+                      </div>
+                    </div>
+                    <!-- 5th column -->
+                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                      <div class="well">
+                        <div class="text-center">
+                          <h3><strong>Belt Promotion</strong></h3>
+                          <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.examDate | date:'yyyy-MM-dd'}}</span></h4>
+                        </div>
+
+                        <h4 class="text-center"><strong>Next Belt: {{studentObj.membershipInfo.nextBelt}}</strong></h4>
+                        <p> </p>
+                        <p> </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end class row -->
+                </div>
+                <!-- end panel body -->
+              </div>
+            </div>
+          </tab>
+          </tabset>
+        </form>
+      </div> <!-- div editorEnabled -->
+      <!-- END SECTION FOR EDIT MODE -->
+    </div><!-- end panel body -->
+</div>

@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li><a href="/adminMain">Home</a></li>
+        <li class="active">Attendance</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading">
+        <span class="panel-title">Attendance</span>
+        <div class="pull-right">
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Student Number</th>
+                        <th ng-click="doSort('firstName')">First Name  <img src="../img/sort.jpg"></th>
+                        <th ng-click="doSort('lastName')">Last Name <img src="../img/sort.jpg"></th>
+                        <th ng-click="doSort('currentBelt')">Belt <img src="../img/sort.jpg"></th>
+                        <th ng-click="doSort('latestDate')">Last Class <img src="../img/sort.jpg"></th>
+                        <th ng-click="doSort('classesThisWeek')">Classes this Week<img src="../img/sort.jpg"></th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in studentsList | filter:searchText | orderBy:sortBy:reverse">
+                    <td><a href="/adminAttendanceDetail/{{item.studentNumber}}">{{ item.studentNumber }}</a></td>
+                    <td>{{ item.firstName }}</td>
+                    <td>{{ item.lastName }}</td>
+                    <td>{{ item.currentBelt }}</td>
+                    <td>{{ item.latestDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{ item.classesThisWeek }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

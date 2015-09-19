@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li class="active">Home</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Belt Information</span>
+<!--         <div class="pull-right">Sort by:
+            <a href="">Name</a><span> |</span>
+            <a href="">Belt</a><span> |</span>
+            <a href="">Tip Due</a><span>
+        </div> -->
+    </div>
+    <div class="panel-body">
+        <div class="student well well-sm" ng-repeat="student in studentList | filter:searchText">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object img-rounded" src="img/{{student.photo}}" alt="profile image" style="height: 100px; width: 100px;">
+                </a>
+              </div>
+              <div class="media-body " >
+                <h4 style="display: inline;" class="media-heading">{{student.firstName}} {{student.lastName}}</h4>
+                <div class="pull-right" >
+                  <button class="btn btn-primary" style="height:100px;" ng-hide="student.promoAble" ng-click="evaluateStudent(student,'Promote')">Promote</button>
+                  <div class="promotion" ng-show="student.promoAble">
+                    <div class="btn-group" >
+                      <button class="btn btn-success" style="height:100px;" ng-click="evaluateStudent(student,'Full Tip')">Full Tip</button>
+                      <button class="btn btn-warning" style="height:100px;" ng-click="evaluateStudent(student,'Half Tip')">Half Tip</button>
+                    </div>
+                  </div>
+                </div>
+                <h4 ><span class="label label-primary">Belt <span class="badge ng-binding">{{student.currentBelt}}</span></span></h4>
+              </div> <!-- media body -->
+
+            </div>
+        </div>
+    </div>
+</div>

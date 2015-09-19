@@ -1,0 +1,19 @@
+<div class="jumbotron text-center">
+	<a href="/studentsMain">student main</a>
+	<a href="/adminMain">admin main</a>
+	<a href="/instructorMain">instructor main</a>
+    <h1>Home Page</h1>
+    <p>{{ tagline }}</p>
+	<a href="/students">Students Page</a>
+	<h1>Register new</h1>
+	<form action="/loginC" method="post">
+		<input type="text" name="username" placeholder="username">
+		<select name="role">
+		  <option value="admin">Admin</option>
+		  <option value="instructor">Instructor</option>
+		  <option value="student">Student</option>
+		</select>
+		<input type="password" name="password" placeholder="password">
+		<input type="submit" value="log in">
+	</form>
+</div>

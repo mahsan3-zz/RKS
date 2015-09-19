@@ -1,0 +1,249 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+.navbar-brand{
+    width: 150px;
+}
+
+.logo{
+    width: 220px;
+}
+
+.navbar span{
+color: #FFF;
+}
+.login {
+    margin-top: 5px;
+}
+.login img{
+    border-radius: 10%;
+}
+.spacer{
+    height: 30px;
+}
+
+.sidebar{
+    border: 1px solid #000;
+}
+
+
+td.details-control {
+    background: url('../images/delete.png') no-repeat center center;
+    cursor: pointer;
+}
+.footer{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.footer li{
+    display: inline;
+    margin-right: 10px;
+}
+
+.notification, .sidebar-brand {
+    background-color: #818181;
+    color: white;
+    font-size: 14px;
+    padding: 0;
+}
+
+.notification {
+    height: 160px;
+}
+
+.sidebar-brand h3{
+    padding-top: 10px;
+}
+
+/* ADMIN MAIN */
+
+#admin_content textarea{
+    resize: none;
+}
+#communication_post input{
+    margin-bottom: 26px;
+}
+
+#communication_posted {
+    margin-top: 20px;
+}
+#communication_post button{
+    width: 100%;
+}
+
+.social{
+    /*width: 100%;*/
+    text-align:center;
+}
+
+.social .btn-group{
+    margin-bottom: 5px;
+}
+.timestamp {
+    font-size: 12px;
+    color: grey;
+}
+
+.title{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logoutSmall{
+    display: block;
+}
+@media(min-width:768px) {
+    .logoutSmall {
+        display: none;
+    }
+}
+.panel-heading {
+    line-height:32px;
+    font-weight: bold;
+}
+.panel-footer{
+    line-height:32px;
+}
+.event-list{
+   border: 1px solid #ccc;
+   border-top: 0;
+    word-wrap: break-word;
+    padding: 6px 10px;
+    line-height: 19px;
+}
+
+.attendance-detail-info{
+  display: inline;
+  margin: 5px;
+}
+.attendance-detail-well{
+  line-height: 32px;
+}
+
+.searchbox {
+  margin-bottom: 20px;
+}
+/* ==========================================================================
+   Image upload
+   ========================================================================== */
+.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 70px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+/* ==========================================================================
+   Hide Default Date Picker in Chrome
+      - the yyyy-mm-dd still appears
+      - if use input type = date, and format is limited to 'yyyy-MM-dd'
+        when selecting date with angularBootstrapCalendar, it will input the date in
+        but does not save to datebase!
+   ========================================================================== */
+/*
+
+input[type=date]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-inner-spin-button
+{
+  -webkit-appearance: none;
+  display: none;
+}*/
+
+/* http://cssdeck.com/labs/calendar-icon */
+time.icon
+{
+  font-size: 1em; /* change icon size */
+  display: block;
+  position: relative;
+  width: 7em;
+  height: 7em;
+  background-color: #fff;
+  margin: 1em auto;
+  border-radius: 0.6em;
+  box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: rotate(0deg) skewY(0deg);
+  -webkit-transform-origin: 50% 10%;
+  transform-origin: 50% 10%;
+}
+
+time.icon *
+{
+  display: block;
+  width: 100%;
+  font-size: 1em;
+  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+}
+
+time.icon strong
+{
+  position: absolute;
+  top: 0;
+  padding: 0.4em 0;
+  color: #fff;
+  background-color: #B20900;
+  border-bottom: 1px dashed #FFFFFF;
+  box-shadow: 0 2px 0 #B20900;
+}
+
+time.icon em
+{
+  position: absolute;
+  bottom: 0.3em;
+  color: #000;
+}
+
+time.icon span
+{
+  width: 100%;
+  font-size: 2.8em;
+  letter-spacing: -0.05em;
+  padding-top: 1.2em;
+  color: #2f2f2f;
+}
+
+time.icon:hover, time.icon:focus
+{
+  -webkit-animation: swing 0.5s ease-out;
+  animation: swing 0.5s ease-out;
+}
+
+@-webkit-keyframes swing {
+  0%   { -webkit-transform: rotate(0deg)  skewY(0deg); }
+  20%  { -webkit-transform: rotate(7deg) skewY(3deg); }
+  60%  { -webkit-transform: rotate(-2deg) skewY(-3deg); }
+  80%  { -webkit-transform: rotate(6deg)  skewY(-2deg); }
+  100% { -webkit-transform: rotate(0deg)  skewY(0deg); }
+}
+
+@keyframes swing {
+  0%   { transform: rotate(0deg)  skewY(0deg); }
+  20%  { transform: rotate(9deg) skewY(3deg); }
+  60%  { transform: rotate(-9deg) skewY(-3deg); }
+  80%  { transform: rotate(6deg)  skewY(-2deg); }
+  100% { transform: rotate(0deg)  skewY(0deg); }
+}

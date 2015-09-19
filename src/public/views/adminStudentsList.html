@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li><a href="/adminMain">Home</a></li>
+        <li class="active">Members</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Members</span>
+        <span class="pull-right">
+            <button type="button" class="btn btn-sm btn-primary" ng-click="addStudent()">Add</button>
+            <button type="button" class="btn btn-sm btn-danger"  ng-click="deleteStudents()">Delete</button>
+        </span>
+    </div>
+    <div class="panel-body">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID Number</th>
+                    <th ng-click="doSort('firstName')">First Name  <img src="../img/sort.jpg"></th>
+                    <th ng-click="doSort('lastName')">Last Name <img src="../img/sort.jpg"></th>
+                    <th >Home Phone</th>
+                    <th >Email</th>
+                    <th ng-click="doSort('currentBelt')">Belt <img src="../img/sort.jpg"></th>
+					<th ng-click="doSort('role')">Role <img src="../img/sort.jpg"></th>
+                </tr>
+            </thead>
+            <tr ng-repeat="item in studentsList | filter:searchText | orderBy:sortBy:reverse">
+                <td><input type="checkbox" ng-click="manageSelected(item.studentNumber)"></td>
+                <td><a href="/adminStudentsDetails/{{item.studentNumber}}">{{ item.studentNumber }}</a></td>
+                <td>{{ item.firstName }}</td>
+                <td>{{ item.lastName }}</td>
+                <td>{{ item.homePhone }}</td>
+                <td><a ng-href="mailto:{{item.email}}">{{ item.email }}</a></td>
+                <td>{{ item.currentBelt }}</td>
+				<td>{{ item.role }}</td>
+            </tr>
+        </table>
+    </div>
+    </div>
+</div>

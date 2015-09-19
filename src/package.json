@@ -1,0 +1,31 @@
+{
+  "name": "CapstoneProject",
+  "version": "1.0.0",
+  "description": "CMS for RKS",
+  "main": "server.js",
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "morgan": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "passport-local-mongoose": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*",
+    "ejs": "*",
+    "connect-flash": "*",
+    "connect-multiparty": "*",
+    "connect-modrewrite": "*",
+    "node-uuid": "*",
+    "mongoose-auto-increment": "*",
+    "nodemailer": "*",
+	"twitter": "*"
+  },
+  "author": "Team 8",
+  "license": "ISC",
+  "devDependencies": {
+    "connect-modrewrite": "^0.7.11"
+  }
+}

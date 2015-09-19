@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li><a href="/{{homePage}}">Home</a></li>
+        <li class="active">Events</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Events</span>
+        <div class="pull-right">
+        </div>
+    </div>
+    <div class="panel-body clearfix">
+        <tabset>
+          <div class="pull-right" ng-show="calendarToggle">
+              <span class="panel-title">  {{calendarControl.getTitle()}}  </span>&nbsp;
+            <div class="btn-group btn-group-xs">
+                <button class="btn btn-primary" ng-click="calendarControl.prev()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                <button class="btn btn-default" ng-click="calendarControl.today()">Today</button>
+                <button class="btn btn-primary" ng-click="calendarControl.next()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+              </div>
+            <div class="btn-group btn-group-xs">
+                <label class="btn btn-primary ng-pristine ng-untouched ng-valid" ng-model="calendarView" btn-radio="'year'" ng-click="calendarControl.year()">Year</label>
+                <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="calendarView" btn-radio="'month'" ng-click="calendarControl.month()">Month</label>
+                <label class="btn btn-primary ng-pristine ng-untouched ng-valid" ng-model="calendarView" btn-radio="'week'" ng-click="calendarControl.week()">Week</label>
+                <label class="btn btn-primary ng-pristine ng-untouched ng-valid" ng-model="calendarView" btn-radio="'day'" ng-click="calendarControl.day()">Day</label>
+            </div>
+          </div>
+            <tab heading="List" ng-click="calendarToggle=false">
+                <div class="event-list">
+                    <div class=" panel panel-default" ng-repeat="event in eventList | filter:searchText | orderBy: 'starts_at'" ng-show="eventShow(event.starts_at)">
+                      <div class="panel-heading clearfix">
+                        <span class="panel-title" >{{event.name}}</span>
+                      </div>
+                      <div class="row">
+                          <div class="panel-body">
+                            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xl-2">
+                              <time datetime="{{event.starts_at}}" class="icon">
+                                <em>{{event.starts_at | date:'EEEE'}}</em>
+                                <strong>{{event.starts_at | date:'MMMM'}}</strong>
+                                <span>{{event.starts_at | date:'d'}}</span>
+                              </time>
+                              <h4 style="text-align: center;">{{event.location}}</h4>
+                            </div>
+                            <div class="col-xs-8 col-sm-9 col-md-9 col-lg-10 col-xl-10">
+                                <p>{{event.description}}</p>
+
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Calendar" ng-click="calendarToggle=true">
+                <div class="event-list">
+                    <mwl-calendar
+                    calendar-events="events"
+                    calendar-view="calendarView"
+                    calendar-current-day="calendarDay"
+                    calendar-control="calendarControl"
+                    calendar-event-click="toView($event)"
+                    calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                    calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+                    calendar-edit-event-click=""
+                    calendar-delete-event-click=""
+                    calendar-auto-open="false"
+                    ></mwl-calendar>
+                </div>
+            </div>
+          </tab>
+        </tabset>
+    </div>
+</div>
+
+
+<!-- VIEW MODAL  -->
+<div class="modal fade" id="viewEventModal" tabindex="-1" role="dialog" aria-labelledby="viewEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clearEvent()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="viewEventModalLabel">{{newEvent.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <label>Description</label>
+        <p>{{newEvent.description}}</p>
+        <label for="viewLocation">Location</label>
+        <p id="viewLocation">{{newEvent.location}}</p>
+        <label for="viewStart">Start Date</label>
+        <p id="viewStart">{{newEvent.starts_at | date: "MMMM d, yyyy"}}</p>
+        <label for="viewEnd">End Date</label>
+        <p id="viewEnd">{{newEvent.ends_at | date: "MMMM d, yyyy"}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearEvent()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

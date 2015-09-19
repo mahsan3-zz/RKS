@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+      <ol class="breadcrumb">
+        <li class="active">Home</li>
+      </ol>
+    </div>
+</div>
+<div id="student_content" >
+  <div id="membership-information" class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Membership Information</h4>
+    </div>
+    <div class="panel-body">
+      <div class="row text-center">
+        <div class=" col-xs-4 col-sm-3 col-md-2 col-lg-2">
+          <div id="class-count" class="well">
+            <span class="panel-title">Classes</span>
+            <h5 id="count">{{totalClasses}}</h5>
+          </div>
+        </div>
+        <div class="col-xs-8 col-sm-6 col-md-8 col-lg-8">
+          <!-- BELT TYPE -->
+          <p>{{studentObj.membershipInfo.belt}} Belt</p>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{progressBar}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progressBar}}%;">
+              {{progressBar}}%
+            </div>
+          </div>
+        </div>
+        <div class=" col-xs-12 col-sm-3 col-md-2 col-lg-2">
+          <div class="well">
+            <p><strong>Next Tip / Exam Date</strong></p>
+            <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.tipDate | date:'yyyy-MM-dd'}}</span></h4>
+          </div>
+        </div>
+      </div>
+      <!-- end class row text-center -->
+      <div class="row">
+        <!-- 1st column -->
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+          <div class="well">
+            <div class="text-center">
+              <p><strong>Belt Date</strong></p>
+              <h4><span class="label label-primary">{{studentObj.membershipInfo.beltDate | date:'yyyy-MM-dd'}}</span></h4>
+              <br>
+            </div>
+<!--
+            <p>A Days <span class="badge pull-right">{{tipA}}</span></p>
+            <p>B Days <span class="badge pull-right">{{tipB}}</span></p>
+            <p>Boot Camp <span class="badge pull-right">{{bootCampDays}}</span></p>
+-->
+          </div>
+        </div>
+        <!-- 2nd column -->
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+          <div class="well">
+            <div class="text-center">
+              <p><strong>1st Tip</strong></p>
+              <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.firstTip | date:'yyyy-MM-dd'}}</span></h4>
+            </div>
+<!--
+            <p>A Days <span class="badge pull-right">{{tipOneA}}</span></p>
+            <p>B Days <span class="badge pull-right">{{tipOneB}}</span></p>
+            <p>Boot Camp <span class="badge pull-right">{{tipOneBootCamp}}</span></p>
+-->
+          </div>
+        </div>
+        <!-- 3rd column -->
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+          <div class="well">
+            <div class="text-center">
+              <p><strong>2nd Tip</strong></p>
+              <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.secondTip | date:'yyyy-MM-dd'}}</span></h4>
+            </div>
+<!--
+            <p>A Days <span class="badge pull-right">{{tipTwoA}}</span></p>
+            <p>B Days <span class="badge pull-right">{{tipTwoB}}</span></p>
+            <p>Boot Camp <span class="badge pull-right">{{tipTwoBootCamp}}</span></p>
+-->
+          </div>
+        </div>
+        <!-- 4th column -->
+        <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2">
+          <div class="well">
+            <div class="text-center">
+              <p><strong>3rd Tip</strong></p>
+              <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.thirdTip | date:'yyyy-MM-dd'}}</span></h4>
+            </div>
+
+            <!--
+<p>A Days <span class="badge pull-right">{{tipThreeA}}</span></p>
+<p>B Days <span class="badge pull-right">{{tipThreeB}}</span></p>
+<p>Boot Camp <span class="badge pull-right">{{tipThreeBootCamp}}</span></p>
+-->
+          </div>
+        </div>
+        <!-- 5th column -->
+        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+          <div class="well">
+            <div class="text-center">
+              <h3><strong>Belt Promotion</strong></h3>
+              <h4><span class="label label-primary">{{studentObj.membershipInfo.tip.examDate | date:'yyyy-MM-dd'}}</span></h4>
+            </div>
+
+            <h4 class="text-center"><strong>Next Belt: {{studentObj.membershipInfo.nextBelt}}</strong></h4>
+            <p> </p>
+            <p> </p>
+          </div>
+        </div>
+      </div>
+      <!-- end class row -->
+    </div>
+  </div>
+
+
+  <div class="news panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title">News</span>
+    </div>
+    <div class="panel-body">
+      <div id="communication_posted" >
+        <div class="post panel panel-default" ng-repeat="item in communicationList | orderBy: '-postedDate' ">
+
+
+          <div class="panel-heading clearfix">
+            <span class="panel-title" >{{item.subject}}</span>
+
+            <!-- DROPDOWN -->
+            <div class="btn-group pull-right btn-group-sm" >
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Options <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="toEdit(item)"data-toggle="modal" data-target="#editModal" >Edit</a></li>
+                <li><a href="#" ng-click="deletePost(item._id)">Delete</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="panel-body">
+            <p>{{item.content}}</p>
+          </div>
+          <div class="panel-footer clearfix">
+            <em class="timestamp">Posted by {{item.author}} on {{item.postedDate | date: 'medium'}}</em>
+            <div class="social pull-right" >
+              <label class="label label-success">
+                <img src="img/social/facebook.png" ng-show="item.socialMedia.facebook">
+                <img src="img/social/twitter.png" ng-show="item.socialMedia.twitter">
+                <img src="img/social/email.png" ng-show="item.socialMedia.email">
+                <img src="img/social/sharethis.png" ng-show="item.socialMedia.announcement">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

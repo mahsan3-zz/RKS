@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li class="active">Home</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Communications</span>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-primary" ng-click="login()" ng-disabled="loginStatus.status == 'connected'">Connect with Facebook</button>
+             &nbsp;
+            <button class="btn btn-sm btn-danger" ng-click="logout()" ng-disabled="!loginStatus || loginStatus.status != 'connected'">Logout</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div id="admin_panel" >
+            <div id="communication_post" class="row">
+                <form>
+                    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+                        <input type="text" style="margin-bottom: 10px;" class="form-control" placeholder="Subject" ng-model="post.subject">
+                        <textarea style=" height: 89px; margin-bottom: 10px; " class="form-control" rows="3" placeholder="Share news or posts..." ng-model="post.content"></textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-2  col-lg-2">
+                        <div class="social">
+
+                            <div class="btn-group">
+                                <label class="btn btn-sm btn-default" ng-model="post.socialMedia.facebook" btn-checkbox><img src="img/social/facebook.png"></label>
+                                <label class="btn btn-sm btn-default" ng-model="post.socialMedia.twitter" btn-checkbox><img src="img/social/twitter.png"></label>
+                            </div>
+                            <div class="btn-group">
+                                <label class="btn btn-sm btn-default" ng-model="post.socialMedia.email" btn-checkbox><img src="img/social/email.png"></label>
+                                <label class="btn btn-sm btn-default" ng-model="post.socialMedia.announcement" btn-checkbox><img src="img/social/sharethis.png"></label>
+                            </div>
+                            <button class="btn btn-primary" ng-click="createPost()" style="width: 107px;">Post</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- POSTED COMMUNICATION -->
+        <div id="communication_posted" >
+            <div class="post panel panel-default" ng-repeat="item in communicationList | orderBy: '-postedDate' | filter:searchText">
+
+
+                <div class="panel-heading clearfix">
+                    <span class="panel-title" >{{item.subject}}</span>
+
+                    <!-- DROPDOWN -->
+                    <div class="btn-group pull-right btn-group-sm" >
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        Options <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" ng-click="toEdit(item)"data-toggle="modal" data-target="#editModal" >Edit</a></li>
+                        <li><a href="#" ng-click="deletePost(item._id)">Delete</a></li>
+                      </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                        <p>{{item.content}}</p>
+                </div>
+                <div class="panel-footer clearfix">
+                    <em class="timestamp">Posted by {{item.author}} on {{item.postedDate | date: 'medium'}}</em>
+                        <div class="social pull-right" >
+                            <label class="label label-success">
+                                <img src="img/social/facebook.png" ng-show="item.socialMedia.facebook">
+                                <img src="img/social/twitter.png" ng-show="item.socialMedia.twitter">
+                                <img src="img/social/email.png" ng-show="item.socialMedia.email">
+                                <img src="img/social/sharethis.png" ng-show="item.socialMedia.announcement">
+                            </label>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- EDIT MODAL  -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">Edit Post</h4>
+      </div>
+      <div class="modal-body">
+            <form novalidate>
+              <label>Title</label>
+              <input id="editSubject" type="text" class="form-control" placeholder="Subject" ng-model="edit.subject" required>
+              <label>Post</label>
+              <textarea class="form-control" rows="3" placeholder="Share news or posts..." ng-model="edit.content"></textarea required>
+              <div class="social">
+                <div class="checkbox" >
+                  <label>
+                    <input name="socialMedia" type="checkbox" ng-model="edit.socialMedia.facebook">Facebook
+                  </label >
+                  <label>
+                    <input name="socialMedia" type="checkbox" ng-model="edit.socialMedia.twitter" >Twitter
+                  </label>
+                  <label>
+                    <input name="socialMedia" type="checkbox" ng-model="edit.socialMedia.email" >Email
+                  </label>
+                  <label>
+                    <input name="socialMedia" type="checkbox" ng-model="edit.socialMedia.announcement" >Announcement
+                  </label>
+                </div>
+              </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="editPost(edit)" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

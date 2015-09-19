@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+      <ol class="breadcrumb">
+        <li><a href="/adminMain">Home</a></li>
+        <li class="active">Barcode Generator</li>
+      </ol>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Barcode Generator</span>
+        <div class="pull-right">
+          <label>Number</label>
+          <input type="text" ng-model="barCodeValue">
+        </div>
+    </div>
+    <div class="panel-body" ng-show="barCodeValue">
+      <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+          <div barcode-generator="{{barCodeValue}}" style="height:75px;"></div>
+          <p class="">{{barCodeValue}}</p>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        </div>
+      </div>
+
+
+    </div>
+</div>

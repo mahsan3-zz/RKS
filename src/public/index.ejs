@@ -1,0 +1,202 @@
+<!-- public/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <link rel="icon"
+      type="image/png"
+      href="img/favicon.ico">
+    <title>Robinson's Karate School</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
+	<!-- custom styles -->
+	<link rel="stylesheet" href="css/barcode.css">
+	<link rel="stylesheet" href="css/simple-sidebar.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="libs/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
+
+    <!-- JS -->
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-route/angular-route.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
+	<script src="libs/jQuery/dist/jquery.js"></script>
+	<script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="libs/bootbox/bootbox.js"></script>
+	<script src="libs/ng-file-upload/angular-file-upload.js"></script>
+    <script src="libs/moment/min/moment.min.js"></script>
+    <script src="libs/angular-easyfb/angular-easyfb.min.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="libs/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+
+    <!-- ANGULAR CUSTOM -->
+	<script src="js/controllers/barcodeCtrl.js"></script>
+	<script src="js/controllers/helpCtrl.js"></script>
+	<script src="js/directives/barcodeGenerator.js"></script>
+    <script src="js/controllers/DateCtrl.js"></script>
+    <script src="js/controllers/StudentMembershipInfoCtrl.js"></script>
+	<script src="js/controllers/attendanceController.js"></script>
+	<script src="js/controllers/attendanceDetailController.js"></script>
+    <script src="js/controllers/StudentsListCtrl.js"></script>
+    <script src="js/controllers/StudentsDetailsCtrl.js"></script>
+	<script src="js/controllers/instructorMainCtrl.js"></script>
+    <script src="js/services/beltPromotionFactory.js"></script>
+    <script src="js/controllers/BeltCtrl.js"></script>
+    <script src="js/controllers/BeltInformationCtrl.js"></script>
+    <script src="js/services/beltInformationFactory.js"></script>
+    <script src="js/services/studentFactory.js"></script>
+	<script src="js/services/permissionManager.js"></script>
+    <script src="js/controllers/StudentsAddCtrl.js"></script>
+    <script src="js/controllers/CommunicationCtrl.js"></script>
+    <script src="js/controllers/StudentsPersonalInfoDetailsCtrl.js"></script>
+    <script src="js/services/communicationFactory.js"></script>
+    <script src="js/controllers/ShiftReportCtrl.js"></script>
+    <script src="js/services/shiftReportFactory.js"></script>
+    <script src="js/controllers/EventCtrl.js"></script>
+    <script src="js/controllers/EventCtrlInstructorStudent.js"></script>
+    <script src="js/services/eventFactory.js"></script>
+	<script src="js/services/attendanceFactory.js"></script>
+    <script src="js/controllers/ReportCtrl.js"></script>
+    <script src="js/appRoutes.js"></script>
+    <script src="js/app.js"></script>
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+        #sidebar-wrapper{
+            background: #286295;
+
+        }
+        .sidebar-nav li a {
+            color: #FFFFFF;
+        }
+
+    </style>
+</head>
+<body ng-app="RKS" class="dt-example">
+	    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		  <div class="container">
+			<div class="navbar-header">
+
+			  <!-- button vs a?
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			  -->
+			  <a href="#menu-toggle" id="menu-toggle" type="button" class="navbar-toggle"  data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </a>
+			  <a class="" href="#"><img class=" logo" src="img/RKS_Logo.png"></a>
+			</div>
+			<div class="navbar-collapse collapse">
+
+			  <div class="pull-right login" style="width:200px">
+				<div class="clearfix">
+                    <div class="media-left">
+    					<img class="media-object" src="/img/<%= user.photo %>" width="42px" height="42px">
+    				</div>
+    				<div class="media-body">
+    					<span class="media-heading"><%= user.username %></span>
+                        <form action="/logout" method="get">
+                            <button class="btn btn-xs btn-primary" type="submit">Logout <span class="glyphicon glyphicon-log-out"></span> </button>
+                        </form>
+    				</div>
+
+                </div>
+			  </div>
+
+			</div><!--/.navbar-collapse -->
+		  </div>
+    </div>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li></li>
+				<% if(user.permission === 'admin'){ %>
+					<li><a href="/adminMain">Communications</a></li>
+					<li><a href="/adminStudentsList">Members</a></li>
+					<li><a href="/adminBeltInformation">Belt Information</a></li>
+					<li><a href="/adminAttendance">Attendance</a></li>
+					<li><a href="/report">Report</a></li>
+					<li><a href="/studentClasses">Classes </a></li>
+					<li><a href="/adminShiftReports">Shift Reports</a></li>
+					<li><a href="/adminBeltPromotion">Belt Promotions</a></li>
+					<li><a href="/adminEvents">Events</a></li>
+          			<li><a href="/adminAttendanceScan">Attendance Scanner</a></li>
+					<li><a href="/barcode">Barcode</a></li>
+<!--					<li><a href="/help">Help</a></li>-->
+					<li><a href="https://www.youtube.com/watch?t=14&v=8cDGr5Jrw5U" target="_blank">Help</a></li>
+				<% } %>
+
+				<% if(user.permission.toLowerCase() === 'instructor'){ %>
+					<li><a href="/instructorMain">Students</a></li>
+					<li><a href="/instructorEvents">Events</a></li>
+					<li><a href="/instructorShiftReports">Shift Reports</a></li>
+				<% } %>
+
+				<% if(user.permission === 'Student'){ %>
+					<li><a href="/studentsMain">Membership Information</a></li>
+					<li><a href="/studentPersonal">Personal Information</a></li>
+					<li><a href="/studentEvents">Events</a></li>
+					<li><a href="/studentClasses">Classes </a></li>
+				<% } %>
+          <li class="logoutSmall"><form action="/logout" method="get"><button style="width: 210px"type="submit" class="btn btn-primary">Logout</button></form></li>
+            </ul>
+        </div>
+
+		<div id="page-content-wrapper">
+
+            <!-- ANGULAR DYNAMIC CONTENT -->
+            <!--<div ng-view style="padding-left: 250px">-->
+            <div ng-view class="">
+
+            </div>
+            <!-- FOOTER -->
+            <hr>
+            <footer>
+            <ul class="footer">
+               <li><a href="/">Home</a></li>
+               <li><a href="#">About</a></li>
+               <li><a target="_blank" href="https://www.facebook.com/pages/RKS-Team8/1638302279722926">Facebook</a></li>
+               <li><a target="_blank" href="https://twitter.com/RKS_Team8">Twitter</a></li>
+             </ul>
+            </footer>
+		</div>
+    </div><!-- /container -->
+
+
+	<script type="text/javascript">
+        $("#menu-toggle")
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        $(document).ready(function() {
+          // Optimalisation: Store the references outside the event handler:
+          var $window = $(window);
+          var $pane = $('#pane1');
+
+          function checkWidth() {
+              var windowsize = $window.width();
+              if (windowsize > 768) {
+                  //if the window is greater than 440px wide then turn on jScrollPane..
+                  if($("#wrapper").hasClass("toggled")){
+                    $("#wrapper").removeClass("toggled")
+                  }
+              }
+          }
+          // Execute on load
+          checkWidth();
+          // Bind event listener
+          $(window).resize(checkWidth);
+        });
+    </script>
+</body>
+
+</html>
+

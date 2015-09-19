@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <ol class="breadcrumb">
+        <li><a href="/adminMain">Home</a></li>
+        <li class="active">Belt Promotions</li>
+      </ol>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div class="input-group input-group searchbox">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
+    </div>
+</div>
+<div id="admin_content" class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <span class="panel-title">Belt Promotion Rules</span>
+        <div class="pull-right">
+            <a data-toggle="modal" data-target="#promotionModal"><button class="btn btn-sm btn-primary">Add</button></a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Order</th>
+            <th>Rank</th>
+            <th>Promotion Rules</th>
+          </tr>
+          <tr ng-repeat="beltRule in beltPromotionRulesList | orderBy: 'beltOrder' ">
+            <td>{{beltRule.beltOrder}}</td>
+            <td><a data-toggle="modal" data-target="#promotionModal" ng-click="editRule(beltRule)">{{beltRule.belt}}</a></td>
+            <td>{{beltRuleType(beltRule)}}</td>
+          </tr>
+        </table>
+    </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="modal fade" id="promotionModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">Add Rule</h4>
+      </div>
+
+        <div class="modal-body">
+            <form name="addEdit" novalidate >
+                  <label for="editOrder">Belt Order</label>
+                  <input id="editOrder" type="number" min="0" class="form-control" placeholder="" ng-model="promotionRuleAdd.beltOrder" required>
+                  <label for="editRank">Rank</label>
+                  <input id="editRank" type="text" class="form-control" placeholder="" ng-model="promotionRuleAdd.belt" required>
+                  <label for="editBootcamp">Bootcamp Required?</label>
+                  <input id="editBootcamp" type="checkbox" class="form-control" placeholder="" ng-model="promotionRuleAdd.bootCampClass" >
+                  <div ng-hide="promotionRuleAdd.bootCampClass">
+                      <label for="editWeeks">Weeks</label>
+                      <input id="editWeeks" type="number" min="0" class="form-control" placeholder="" ng-model="promotionRuleAdd.weeksBetweenTips">
+                  </div>
+                  <div ng-show="promotionRuleAdd.bootCampClass">
+                      <label for="editClasses">Classes</label>
+                      <input id="editClasses" type="number" min="0" class="form-control" placeholder="" ng-model="promotionRuleAdd.classesRequired" >
+                      <label for="editBoots">Boot Camps</label>
+                      <input id="editBoots" type="number" min="0" class="form-control" placeholder="" ng-model="promotionRuleAdd.bootCampRequired" >
+                  </div>
+                </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearRule()">Close</button>
+          <button type="button" class="btn btn-danger" ng-show="update" ng-click="deleteRule(promotionRuleAdd._id)" data-dismiss="modal">Delete</button>
+          <button type="submit" class="btn btn-primary"   ng-disabled="addEdit.$invalid" data-dismiss="modal" ng-click="createRule()" >Save</button>
+        </div>
+
+    </div>
+  </div>
+</div>
